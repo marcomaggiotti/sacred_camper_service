@@ -14,8 +14,6 @@ services:
         generateValue: true
       - key: ADMIN_USERNAME
         value: admin
-      - key: ADMIN_PASSWORD
-        value: ''
       - key: PGSSLMODE
         value: require
       - key: PORT

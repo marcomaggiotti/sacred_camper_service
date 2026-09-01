@@ -13,6 +13,8 @@ const { migrate } = require('./migrate');
 const { seedAdmin } = require('./seedAdmin');
 const authRoutes = require('./routes/auth');
 const reservationRoutes = require('./routes/reservations');
+const taskRoutes = require('./routes/tasks');
+const destinationRoutes = require('./routes/destinations');
 const adminRoutes = require('./routes/admin');
 
 const app = express();
@@ -59,6 +61,8 @@ app.use(
 
 app.use('/api/auth', authRoutes);
 app.use('/api', reservationRoutes);
+app.use('/api', taskRoutes);
+app.use('/api', destinationRoutes);
 app.use('/api/admin', adminRoutes);
 
 app.get('/api/health', async (req, res) => {
@@ -72,8 +76,10 @@ app.get('/api/health', async (req, res) => {
 
 app.use(express.static(path.join(__dirname, '..', 'public'), { extensions: ['html'] }));
 
-app.get('/dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'dashboard.html'));
+['dashboard', 'tasks', 'destinations'].forEach((view) => {
+  app.get(`/${view}`, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', `${view}.html`));
+  });
 });
 
 app.use((req, res) => {

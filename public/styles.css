@@ -445,3 +445,102 @@ th { color: #8494ad; font-size: 0.78rem; text-transform: uppercase; letter-spaci
 .login-card { width: 100%; max-width: 380px; }
 .login-card h1 { margin-top: 0; font-size: 1.35rem; }
 .login-card .hint { font-size: 0.82rem; color: #8494ad; }
+
+/* ------------------------------------------------------------ header nav */
+
+.app-header nav .greeting { margin-right: 0.4rem; opacity: 0.85; }
+.app-header nav a {
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+}
+.app-header nav a.active { background: rgba(255, 217, 160, 0.18); }
+.app-header nav .logout { border-color: #ffd9a0; color: #ffd9a0; }
+
+/* ------------------------------------------------------------- todo list */
+
+.filters { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.chip {
+  background: #fffdf9;
+  border: 1px solid var(--line);
+  color: #5b6b85;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.82rem;
+}
+.chip.active { background: var(--deep); color: #fff; border-color: var(--deep); }
+
+.task-list { list-style: none; margin: 0; padding: 0; }
+.task {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.task:last-child { border-bottom: none; }
+.task-main { flex: 1 1 320px; min-width: 0; }
+.task-title { font-weight: bold; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.task.done .task-title { text-decoration: line-through; opacity: 0.6; }
+.task-description { margin: 0.3rem 0 0; color: #5b6b85; font-size: 0.88rem; }
+.task-meta { margin: 0.35rem 0 0; color: #8494ad; font-size: 0.78rem; }
+.task-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.badge {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-weight: bold;
+}
+.badge.todo  { background: #eef1f6; color: #5b6b85; }
+.badge.doing { background: #ffe3d6; color: #b4511f; }
+.badge.done  { background: #d9f0e6; color: #1f6b4f; }
+
+/* ----------------------------------------------------------- destinations */
+
+.destination {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 0.9rem;
+  background: #fffdf9;
+}
+.destination-head {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.destination h3 { margin: 0; font-size: 1.05rem; }
+.destination-meta { margin: 0.25rem 0 0; color: #8494ad; font-size: 0.8rem; }
+.destination-description { margin: 0.7rem 0 0; color: #5b6b85; font-size: 0.9rem; }
+.destination-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.wishlist-panel {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--line);
+}
+.wish-list { list-style: none; margin: 0 0 0.9rem; padding: 0; }
+.wish {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.wish:last-child { border-bottom: none; }
+.wish.fulfilled .wish-product { text-decoration: line-through; opacity: 0.55; }
+.wish-product { display: block; font-weight: bold; font-size: 0.92rem; }
+.wish-meta { display: block; color: #8494ad; font-size: 0.78rem; }
+.wish-actions { display: flex; gap: 0.4rem; }
+
+.wish-form { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.wish-form input { flex: 1 1 180px; }
+.wish-form input.quantity { flex: 0 0 90px; }
+.wish-form button { flex: 0 0 auto; }

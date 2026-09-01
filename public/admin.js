@@ -1,8 +1,9 @@
 (function () {
   'use strict';
 
+  var api = Camper.api;
+
   var el = {
-    who: document.getElementById('who'),
     userRows: document.getElementById('user-rows'),
     vehicleRows: document.getElementById('vehicle-rows'),
     userMessage: document.getElementById('user-message'),
@@ -11,25 +12,7 @@
 
   var currentUser = null;
 
-  function api(path, options) {
-    var opts = options || {};
-    opts.headers = Object.assign({ 'Content-Type': 'application/json' }, opts.headers || {});
-    return fetch(path, opts).then(function (res) {
-      if (res.status === 401) {
-        window.location.href = '/login';
-        throw new Error('unauthenticated');
-      }
-      return res.json().then(function (data) {
-        if (!res.ok) throw new Error(data.error || 'Richiesta non riuscita.');
-        return data;
-      });
-    });
-  }
-
-  function notify(target, text, kind) {
-    target.textContent = text;
-    target.className = 'message ' + (kind || 'ok');
-  }
+  var notify = Camper.notify;
 
   function cell(row, text) {
     var td = document.createElement('td');
@@ -142,20 +125,13 @@
       .catch(function (err) { notify(el.vehicleMessage, err.message, 'error'); });
   });
 
-  document.getElementById('logout').addEventListener('click', function () {
-    api('/api/auth/logout', { method: 'POST' }).then(function () {
-      window.location.href = '/';
-    });
-  });
-
-  api('/api/auth/me')
-    .then(function (data) {
-      currentUser = data.user;
+  Camper.start('/admin')
+    .then(function (user) {
+      currentUser = user;
       if (!currentUser.isAdmin) {
         window.location.href = '/dashboard';
         return null;
       }
-      el.who.textContent = 'Ciao, ' + (currentUser.fullName || currentUser.username);
       return Promise.all([loadUsers(), loadVehicles()]);
     })
     .catch(function (err) {

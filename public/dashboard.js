@@ -14,9 +14,9 @@
     selection: { start: null, end: null }
   };
 
+  var api = Camper.api;
+
   var el = {
-    who: document.getElementById('who'),
-    adminLink: document.getElementById('admin-link'),
     vehicle: document.getElementById('vehicle'),
     calendar: document.getElementById('calendar'),
     monthLabel: document.getElementById('month-label'),
@@ -41,39 +41,17 @@
     return date.getFullYear() + '-' + m + '-' + d;
   }
 
-  function todayIso() {
-    return iso(new Date());
-  }
-
-  function formatIt(isoDay) {
-    var parts = isoDay.split('-');
-    return parts[2] + '/' + parts[1] + '/' + parts[0];
-  }
+  var todayIso = Camper.todayIso;
+  var formatIt = Camper.formatIt;
 
   // ---------------------------------------------------------------- requests
 
-  function api(path, options) {
-    var opts = options || {};
-    opts.headers = Object.assign({ 'Content-Type': 'application/json' }, opts.headers || {});
-    return fetch(path, opts).then(function (res) {
-      if (res.status === 401) {
-        window.location.href = '/login';
-        throw new Error('unauthenticated');
-      }
-      return res.json().then(function (data) {
-        if (!res.ok) throw new Error(data.error || 'Richiesta non riuscita.');
-        return data;
-      });
-    });
-  }
-
   function notify(text, kind) {
-    el.message.textContent = text;
-    el.message.className = 'message ' + (kind || 'ok');
+    Camper.notify(el.message, text, kind);
   }
 
   function clearNotice() {
-    el.message.className = 'message hidden';
+    Camper.clearNotice(el.message);
   }
 
   // ---------------------------------------------------------------- calendar
@@ -281,18 +259,11 @@
       state.vehicleId = Number(el.vehicle.value);
       renderCalendar();
     });
-    document.getElementById('logout').addEventListener('click', function () {
-      api('/api/auth/logout', { method: 'POST' }).then(function () {
-        window.location.href = '/';
-      });
-    });
   }
 
-  api('/api/auth/me')
-    .then(function (data) {
-      state.user = data.user;
-      el.who.textContent = 'Ciao, ' + (state.user.fullName || state.user.username);
-      el.adminLink.hidden = !state.user.isAdmin;
+  Camper.start('/dashboard')
+    .then(function (user) {
+      state.user = user;
       el.start.min = todayIso();
       el.end.min = todayIso();
       return api('/api/vehicles');

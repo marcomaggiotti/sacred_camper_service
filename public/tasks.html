@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cose da fare · Il Camper Sacro</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🚐</text></svg>">
+</head>
+<body>
+  <header class="app-header">
+    <h1>🚐 Cose da fare</h1>
+    <nav id="nav"></nav>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Aggiungi una cosa da fare</h2>
+      <div class="row">
+        <div class="field" style="flex: 2 1 260px">
+          <label for="title">Cosa c'è da fare</label>
+          <input id="title" maxlength="160" placeholder="Controllare le gomme, comprare il gas…">
+        </div>
+        <div class="field">
+          <label for="due">Entro il (facoltativo)</label>
+          <input id="due" type="date">
+        </div>
+      </div>
+      <div class="field">
+        <label for="description">Dettagli (facoltativi)</label>
+        <textarea id="description" maxlength="1000"></textarea>
+      </div>
+      <label style="font-weight:normal;display:flex;align-items:center;gap:0.45rem;margin-bottom:0.9rem">
+        <input id="assign-me" type="checkbox" style="width:auto"> me ne occupo io
+      </label>
+      <button class="btn-primary" id="add-task">Aggiungi</button>
+      <p class="message hidden" id="message" role="status"></p>
+    </section>
+
+    <section class="panel">
+      <div class="calendar-head">
+        <h2 style="margin:0">Lista</h2>
+        <div class="filters" id="filters">
+          <button class="chip active" data-filter="all">Tutte</button>
+          <button class="chip" data-filter="open">Da fare</button>
+          <button class="chip" data-filter="mine">Le mie</button>
+          <button class="chip" data-filter="free">Libere</button>
+          <button class="chip" data-filter="done">Fatte</button>
+        </div>
+      </div>
+      <ul class="task-list" id="task-list"></ul>
+      <p class="empty hidden" id="no-tasks">Nessuna cosa da fare qui. Ottimo lavoro!</p>
+    </section>
+  </main>
+
+  <script src="/common.js"></script>
+  <script src="/tasks.js"></script>
+</body>
+</html>

@@ -9,6 +9,14 @@ A small web service to book a camper van on a shared calendar.
 - **Dashboard** with a month calendar: click a day for the start and a second day
   for the end of the stay, then book. Days already taken are shown with the name
   of whoever booked them and cannot be selected.
+- **To-do list** where anyone adds what needs doing before the trip and assigns a
+  task to themselves with one click. A task can be claimed only while it is free,
+  released again, marked done and reopened; filters narrow the list to the open,
+  free, mine or finished ones.
+- **Destinations** where travellers propose the stops of the trip, each with its
+  own **wishlist**: every user asks for the products they would like brought back
+  from that place, and whoever buys one ticks it off — the buyer does not have to
+  be the person who asked.
 - **Admin area** where an administrator creates the usernames and passwords that
   people log in with, resets passwords, deactivates accounts, and adds campers.
 
@@ -53,7 +61,7 @@ so TLS is enabled with relaxed verification unless `PGSSLMODE=disable`.
 
 ## Database
 
-The service owns four tables, all prefixed `camper_` so it can share a database
+The service owns seven tables, all prefixed `camper_` so it can share a database
 with other applications (`src/schema.sql`):
 
 | Table | Contents |
@@ -61,7 +69,13 @@ with other applications (`src/schema.sql`):
 | `camper_users` | accounts, bcrypt hashes, admin and active flags |
 | `camper_vehicles` | the campers that can be booked |
 | `camper_reservations` | one row per stay, `start_date`/`end_date` inclusive |
+| `camper_tasks` | to-do items, their status and who claimed them |
+| `camper_destinations` | the stops of the trip |
+| `camper_wishlist_items` | products requested from a destination |
 | `camper_session` | session storage |
+
+The schema is applied on every start and only ever adds what is missing, so an
+existing installation picks up new tables by restarting.
 
 Two reservations for the same camper can never overlap. Every booking takes a
 `SELECT … FOR UPDATE` lock on the camper row before checking for a clash, so
@@ -83,6 +97,15 @@ All endpoints answer JSON and require a session cookie unless noted.
 | `GET /api/reservations` | user | reservations, optional `from`, `to`, `vehicleId` |
 | `POST /api/reservations` | user | book `{vehicleId, startDate, endDate, note}` |
 | `DELETE /api/reservations/:id` | owner or admin | cancel |
+| `GET/POST /api/tasks` | user | list and add to-do items |
+| `POST /api/tasks/:id/assignee` | user | claim a free task, or release your own |
+| `POST /api/tasks/:id/status` | creator, assignee or admin | `todo`, `doing`, `done` |
+| `DELETE /api/tasks/:id` | creator or admin | remove a task |
+| `GET/POST /api/destinations` | user | list and add trip stops |
+| `DELETE /api/destinations/:id` | creator or admin | remove a stop and its wishlist |
+| `GET/POST /api/destinations/:id/wishlist` | user | read the wishlist, add a product |
+| `POST /api/wishlist/:id/fulfilled` | user | mark a product bought, or undo it |
+| `DELETE /api/wishlist/:id` | owner or admin | remove a wish |
 | `GET/POST /api/admin/users` | admin | list and create accounts |
 | `POST /api/admin/users/:id/password` | admin | reset a password |
 | `POST /api/admin/users/:id/active` | admin | activate or deactivate |
@@ -92,7 +115,9 @@ All endpoints answer JSON and require a session cookie unless noted.
 
 A booking is rejected when the dates are malformed or in the past, when the end
 precedes the start, when the stay is longer than 60 days, or when the camper is
-already taken (`409`).
+already taken (`409`). Claiming a task that somebody else already holds is
+rejected the same way: the update only matches while `assignee_id` is still
+null, so two people racing for the same task cannot both win.
 
 ## Testing
 

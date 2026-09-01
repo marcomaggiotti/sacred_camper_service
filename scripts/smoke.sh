@@ -33,5 +33,16 @@ say 'admin can list users and campers'
 curl -fsS -b "$JAR" "$BASE/api/admin/users" > /dev/null
 curl -fsS -b "$JAR" "$BASE/api/vehicles"
 
+say 'the to-do list and the destinations answer'
+curl -fsS -b "$JAR" "$BASE/api/tasks" > /dev/null
+curl -fsS -b "$JAR" "$BASE/api/destinations" > /dev/null
+echo 'ok'
+
+say 'the new views are served'
+for view in tasks destinations; do
+  test "$(curl -s -o /dev/null -w '%{http_code}' "$BASE/$view")" = 200
+done
+echo 'ok'
+
 echo
 echo 'Smoke test passed.'

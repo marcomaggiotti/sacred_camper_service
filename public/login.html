@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accedi · Il Camper Sacro</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🚐</text></svg>">
+</head>
+<body>
+  <div class="login-wrap">
+    <div class="panel login-card">
+      <h1>🚐 Accedi</h1>
+      <p class="hint">Le credenziali vengono create dall'amministratore.</p>
+      <form id="login-form">
+        <div class="field">
+          <label for="username">Username</label>
+          <input id="username" name="username" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required>
+        </div>
+        <button class="btn-primary" type="submit" id="submit">Entra</button>
+      </form>
+      <p class="message error hidden" id="error" role="alert"></p>
+      <p class="hint" style="margin-top:1rem"><a href="/">← Torna alla home</a></p>
+    </div>
+  </div>
+  <script src="/login.js"></script>
+</body>
+</html>

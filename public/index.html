@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Il Camper Sacro</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🚐</text></svg>">
+</head>
+<body>
+  <div class="stage">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="clouds" aria-hidden="true">
+      <div class="cloud c1"></div>
+      <div class="cloud c2"></div>
+      <div class="cloud c3"></div>
+    </div>
+
+    <h1 class="headline">Il camper é il miglior amico dell'uomo</h1>
+    <p class="subhead">Quattro ruote, tanti amici e una festa che non finisce mai.</p>
+
+    <div class="road" role="img" aria-label="Un camper viaggia mentre gli amici festeggiano a bordo">
+      <div class="scenery" aria-hidden="true">
+        <div class="tree" style="left: 4%"></div>
+        <div class="tree" style="left: 16%"></div>
+        <div class="tree" style="left: 27%"></div>
+        <div class="tree" style="left: 41%"></div>
+        <div class="tree" style="left: 54%"></div>
+        <div class="tree" style="left: 66%"></div>
+        <div class="tree" style="left: 77%"></div>
+        <div class="tree" style="left: 91%"></div>
+      </div>
+
+      <div class="camper" aria-hidden="true">
+        <div class="party-bits">
+          <span class="bit">🎉</span>
+          <span class="bit">🎵</span>
+          <span class="bit">🥳</span>
+          <span class="bit">🎈</span>
+          <span class="bit">🎶</span>
+        </div>
+        <div class="body">
+          <div class="window w1"><span class="friend"></span></div>
+          <div class="window w2"><span class="friend b"></span></div>
+          <div class="window w3"><span class="friend c"></span></div>
+        </div>
+        <div class="cab"></div>
+        <div class="windshield"></div>
+        <div class="wheel rear"></div>
+        <div class="wheel front"></div>
+      </div>
+
+      <div class="asphalt" aria-hidden="true"></div>
+    </div>
+
+    <section class="creed">
+      <h2>Il camper é sacro</h2>
+      <p>Prima di salire a bordo, dicci come la pensi.</p>
+      <div class="actions">
+        <button id="agree" class="btn-primary">Agree</button>
+        <button id="disagree" class="btn-ghost">Disagree</button>
+      </div>
+      <p class="verdict" id="verdict" role="status" aria-live="polite"></p>
+    </section>
+  </div>
+
+  <script src="/landing.js"></script>
+</body>
+</html>

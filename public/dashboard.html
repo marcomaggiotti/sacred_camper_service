@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard · Il Camper Sacro</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🚐</text></svg>">
+</head>
+<body>
+  <header class="app-header">
+    <h1>🚐 Il Camper Sacro</h1>
+    <nav id="nav"></nav>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Calendario</h2>
+      <div class="field" style="max-width:320px">
+        <label for="vehicle">Camper</label>
+        <select id="vehicle"></select>
+      </div>
+
+      <div class="calendar-head">
+        <button class="btn-ghost btn-small" id="prev">‹ Mese precedente</button>
+        <strong id="month-label"></strong>
+        <button class="btn-ghost btn-small" id="next">Mese successivo ›</button>
+      </div>
+
+      <div class="calendar" id="calendar"></div>
+
+      <div class="legend">
+        <span><i class="swatch free"></i> libero</span>
+        <span><i class="swatch mine"></i> prenotato da te</span>
+        <span><i class="swatch booked"></i> prenotato da altri</span>
+      </div>
+      <p class="hint" style="font-size:0.82rem;color:#8494ad">
+        Clicca un giorno per l'inizio e un secondo giorno per la fine del soggiorno.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>Nuova prenotazione</h2>
+      <div class="row">
+        <div class="field">
+          <label for="start">Dal</label>
+          <input id="start" type="date">
+        </div>
+        <div class="field">
+          <label for="end">Al</label>
+          <input id="end" type="date">
+        </div>
+      </div>
+      <div class="field">
+        <label for="note">Nota (facoltativa)</label>
+        <textarea id="note" maxlength="500" placeholder="Dove andate? Chi c'è a bordo?"></textarea>
+      </div>
+      <button class="btn-primary" id="reserve">Prenota il camper</button>
+      <button class="btn-ghost btn-small" id="clear" style="margin-left:0.5rem">Azzera selezione</button>
+      <p class="message hidden" id="message" role="status"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Prenotazioni</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Camper</th><th>Dal</th><th>Al</th><th>Chi</th><th>Nota</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="reservation-rows"></tbody>
+      </table>
+      <p class="empty hidden" id="no-reservations">Nessuna prenotazione in programma.</p>
+    </section>
+  </main>
+
+  <script src="/common.js"></script>
+  <script src="/dashboard.js"></script>
+</body>
+</html>

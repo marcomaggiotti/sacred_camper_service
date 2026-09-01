@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Amministrazione · Il Camper Sacro</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🚐</text></svg>">
+</head>
+<body>
+  <header class="app-header">
+    <h1>🚐 Amministrazione</h1>
+    <nav id="nav"></nav>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Crea un utente</h2>
+      <div class="row">
+        <div class="field">
+          <label for="username">Username</label>
+          <input id="username" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="fullName">Nome e cognome</label>
+          <input id="fullName" autocomplete="off">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="password">Password (min. 8 caratteri)</label>
+          <input id="password" type="text" autocomplete="new-password">
+        </div>
+        <div class="field" style="display:flex;align-items:flex-end;gap:0.5rem">
+          <label style="margin:0;display:flex;align-items:center;gap:0.4rem;font-weight:normal">
+            <input id="isAdmin" type="checkbox" style="width:auto"> è amministratore
+          </label>
+        </div>
+      </div>
+      <button class="btn-primary" id="create-user">Crea utente</button>
+      <p class="message hidden" id="user-message" role="status"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Utenti</h2>
+      <table>
+        <thead>
+          <tr><th>Username</th><th>Nome</th><th>Ruolo</th><th>Stato</th><th>Prenotazioni</th><th></th></tr>
+        </thead>
+        <tbody id="user-rows"></tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Aggiungi un camper</h2>
+      <div class="row">
+        <div class="field">
+          <label for="camper-name">Nome</label>
+          <input id="camper-name">
+        </div>
+        <div class="field">
+          <label for="camper-plate">Targa</label>
+          <input id="camper-plate">
+        </div>
+        <div class="field">
+          <label for="camper-seats">Posti</label>
+          <input id="camper-seats" type="number" min="1" max="20" value="4">
+        </div>
+      </div>
+      <div class="field">
+        <label for="camper-description">Descrizione</label>
+        <textarea id="camper-description"></textarea>
+      </div>
+      <button class="btn-primary" id="create-vehicle">Aggiungi camper</button>
+      <p class="message hidden" id="vehicle-message" role="status"></p>
+
+      <table style="margin-top:1.2rem">
+        <thead><tr><th>Nome</th><th>Targa</th><th>Posti</th><th>Attivo</th></tr></thead>
+        <tbody id="vehicle-rows"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="/common.js"></script>
+  <script src="/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Destinazioni · Il Camper Sacro</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🚐</text></svg>">
+</head>
+<body>
+  <header class="app-header">
+    <h1>🚐 Destinazioni</h1>
+    <nav id="nav"></nav>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Aggiungi una destinazione</h2>
+      <div class="row">
+        <div class="field" style="flex:2 1 220px">
+          <label for="name">Dove andiamo</label>
+          <input id="name" maxlength="128" placeholder="Lisbona">
+        </div>
+        <div class="field">
+          <label for="country">Paese</label>
+          <input id="country" maxlength="64" placeholder="Portogallo">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="travel-from">Partenza (facoltativa)</label>
+          <input id="travel-from" type="date">
+        </div>
+        <div class="field">
+          <label for="travel-to">Ritorno (facoltativo)</label>
+          <input id="travel-to" type="date">
+        </div>
+      </div>
+      <div class="field">
+        <label for="description">Cosa c'è da vedere</label>
+        <textarea id="description" maxlength="2000"></textarea>
+      </div>
+      <button class="btn-primary" id="add-destination">Aggiungi destinazione</button>
+      <p class="message hidden" id="message" role="status"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Le tappe del viaggio</h2>
+      <p class="hint" style="font-size:0.85rem;color:#8494ad;margin-top:0">
+        Apri una tappa per vedere la lista dei desideri: ognuno può chiedere i prodotti
+        da portare a casa da quel posto.
+      </p>
+      <div id="destination-list"></div>
+      <p class="empty hidden" id="no-destinations">Nessuna destinazione: proponi la prima tappa.</p>
+    </section>
+  </main>
+
+  <script src="/common.js"></script>
+  <script src="/destinations.js"></script>
+</body>
+</html>

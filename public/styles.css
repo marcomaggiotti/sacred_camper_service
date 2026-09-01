@@ -1,0 +1,546 @@
+:root {
+  --sand: #f6ede0;
+  --sunset: #ff8a5c;
+  --deep: #1d2b45;
+  --sky-top: #ffd9a0;
+  --sky-bottom: #ff9d6e;
+  --leaf: #2f7d63;
+  --card: #ffffff;
+  --line: #e3d7c6;
+  --danger: #c0392b;
+  --shadow: 0 10px 30px rgba(29, 43, 69, 0.12);
+}
+
+* { box-sizing: border-box; }
+
+.hidden { display: none !important; }
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  color: var(--deep);
+  background: var(--sand);
+}
+
+a { color: var(--sunset); }
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 999px;
+  border: none;
+  padding: 0.7rem 1.6rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+button:hover:not(:disabled) { transform: translateY(-2px); }
+button:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.btn-primary { background: var(--sunset); color: #fff; box-shadow: var(--shadow); }
+.btn-ghost { background: transparent; color: var(--deep); border: 2px solid var(--deep); }
+.btn-small { padding: 0.35rem 0.9rem; font-size: 0.85rem; }
+.btn-danger { background: var(--danger); color: #fff; }
+
+/* ---------------------------------------------------------------- landing */
+
+.stage {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 55%, #f6ede0 55%, #f6ede0 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1rem 0;
+}
+
+.sun {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  width: 130px;
+  height: 130px;
+  margin-left: -65px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff3c4 0%, #ffd166 65%, rgba(255, 209, 102, 0) 72%);
+  animation: pulse 6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50%      { transform: scale(1.08); opacity: 1; }
+}
+
+.clouds { position: absolute; inset: 0; pointer-events: none; }
+.cloud {
+  position: absolute;
+  width: 120px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 40px;
+  animation: drift linear infinite;
+}
+.cloud::before, .cloud::after {
+  content: "";
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+.cloud::before { width: 55px; height: 55px; top: -22px; left: 18px; }
+.cloud::after  { width: 40px; height: 40px; top: -14px; left: 62px; }
+.cloud.c1 { top: 12%; animation-duration: 34s; }
+.cloud.c2 { top: 24%; transform: scale(0.7); animation-duration: 46s; animation-delay: -12s; }
+.cloud.c3 { top: 6%;  transform: scale(0.5); animation-duration: 58s; animation-delay: -30s; }
+@keyframes drift {
+  from { left: -180px; }
+  to   { left: 105%; }
+}
+
+.headline {
+  position: relative;
+  z-index: 3;
+  font-size: clamp(1.7rem, 5vw, 3.4rem);
+  max-width: 20ch;
+  margin: 0 auto 0.4rem;
+  color: #fff;
+  text-shadow: 0 4px 18px rgba(29, 43, 69, 0.35);
+  animation: rise 1s ease-out both;
+}
+.subhead {
+  position: relative;
+  z-index: 3;
+  margin: 0 0 1.6rem;
+  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  color: #fff;
+  opacity: 0.92;
+  animation: rise 1s 0.15s ease-out both;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* The camper itself, bouncing along a scrolling road. */
+.road {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 900px;
+  height: 240px;
+  margin-top: 1rem;
+}
+
+.scenery {
+  position: absolute;
+  bottom: 42px;
+  width: 200%;
+  height: 90px;
+  animation: scroll-left 9s linear infinite;
+}
+.tree {
+  position: absolute;
+  bottom: 0;
+  width: 14px;
+  height: 46px;
+  background: #8b5e3c;
+  border-radius: 3px;
+}
+.tree::after {
+  content: "";
+  position: absolute;
+  bottom: 34px;
+  left: -18px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--leaf);
+}
+@keyframes scroll-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.asphalt {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 42px;
+  background: #4a4a55;
+}
+.asphalt::after {
+  content: "";
+  position: absolute;
+  top: 19px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, #fff 0 40px, transparent 40px 80px);
+  animation: dashes 0.7s linear infinite;
+}
+@keyframes dashes {
+  from { background-position-x: 0; }
+  to   { background-position-x: -80px; }
+}
+
+.camper {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  z-index: 2;
+  width: 260px;
+  height: 120px;
+  margin-left: -130px;
+  animation: bounce 0.55s ease-in-out infinite alternate;
+}
+@keyframes bounce {
+  from { transform: translateY(0) rotate(-0.6deg); }
+  to   { transform: translateY(-7px) rotate(0.6deg); }
+}
+
+.camper .body {
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  width: 260px;
+  height: 86px;
+  background: linear-gradient(180deg, #fdfdfd 0 52%, var(--sunset) 52% 100%);
+  border: 3px solid var(--deep);
+  border-radius: 16px 26px 10px 10px;
+}
+.camper .cab {
+  position: absolute;
+  bottom: 18px;
+  right: -46px;
+  width: 62px;
+  height: 62px;
+  background: #fdfdfd;
+  border: 3px solid var(--deep);
+  border-radius: 8px 20px 10px 0;
+}
+.camper .windshield {
+  position: absolute;
+  bottom: 46px;
+  right: -36px;
+  width: 40px;
+  height: 26px;
+  background: #a8dcf0;
+  border: 2px solid var(--deep);
+  border-radius: 4px 10px 2px 2px;
+}
+.camper .window {
+  position: absolute;
+  top: 16px;
+  width: 52px;
+  height: 34px;
+  background: #a8dcf0;
+  border: 2px solid var(--deep);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.camper .window.w1 { left: 22px; }
+.camper .window.w2 { left: 96px; }
+.camper .window.w3 { left: 170px; }
+
+/* A friend waving from behind each window. */
+.friend {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin-left: -12px;
+  border-radius: 50% 50% 40% 40%;
+  background: #f2b880;
+  animation: party 0.9s ease-in-out infinite alternate;
+}
+.friend.b { background: #e28f6b; animation-duration: 0.7s; }
+.friend.c { background: #c98b6b; animation-duration: 1.1s; }
+@keyframes party {
+  from { transform: translateY(4px) rotate(-8deg); }
+  to   { transform: translateY(-3px) rotate(8deg); }
+}
+
+.camper .wheel {
+  position: absolute;
+  bottom: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #2b2b33;
+  border: 5px solid #d8d8de;
+  animation: spin 0.5s linear infinite;
+}
+.camper .wheel.front { right: -30px; }
+.camper .wheel.rear  { left: 34px; }
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Confetti and music notes streaming out of the roof hatch. */
+.party-bits { position: absolute; bottom: 100px; left: 40px; width: 190px; height: 90px; }
+.bit {
+  position: absolute;
+  font-size: 1.2rem;
+  animation: float-up 2.6s ease-in infinite;
+  opacity: 0;
+}
+.bit:nth-child(1) { left: 0;    animation-delay: 0s; }
+.bit:nth-child(2) { left: 40px; animation-delay: 0.4s; }
+.bit:nth-child(3) { left: 80px; animation-delay: 0.9s; }
+.bit:nth-child(4) { left: 120px; animation-delay: 1.4s; }
+.bit:nth-child(5) { left: 160px; animation-delay: 1.9s; }
+@keyframes float-up {
+  0%   { transform: translateY(20px) rotate(0deg) scale(0.6); opacity: 0; }
+  25%  { opacity: 1; }
+  100% { transform: translateY(-70px) rotate(200deg) scale(1.1); opacity: 0; }
+}
+
+.creed {
+  position: relative;
+  z-index: 3;
+  background: var(--card);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  padding: 1.5rem 1.8rem 1.8rem;
+  margin: 1.2rem auto 3rem;
+  max-width: 520px;
+  width: 100%;
+}
+.creed h2 { margin: 0 0 0.3rem; font-size: 1.4rem; }
+.creed p  { margin: 0 0 1.2rem; color: #5b6b85; }
+.creed .actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+
+.verdict {
+  margin-top: 1rem;
+  min-height: 1.4rem;
+  font-weight: bold;
+  color: var(--sunset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sun, .cloud, .scenery, .camper, .camper .wheel, .friend, .bit, .asphalt::after {
+    animation: none !important;
+  }
+}
+
+/* ------------------------------------------------------------------- app */
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem 1.6rem;
+  background: var(--deep);
+  color: #fff;
+}
+.app-header h1 { font-size: 1.15rem; margin: 0; }
+.app-header nav { display: flex; align-items: center; gap: 0.8rem; }
+.app-header a { color: #ffd9a0; text-decoration: none; }
+
+main { max-width: 1080px; margin: 0 auto; padding: 1.6rem 1rem 4rem; }
+
+.panel {
+  background: var(--card);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+.panel h2 { margin-top: 0; font-size: 1.1rem; }
+
+label { display: block; font-size: 0.85rem; margin-bottom: 0.25rem; font-weight: bold; }
+input, select, textarea {
+  font: inherit;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fffdf9;
+}
+textarea { resize: vertical; min-height: 70px; }
+.field { margin-bottom: 0.9rem; }
+.row { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+.row > * { flex: 1 1 180px; }
+
+.message { margin: 0.8rem 0 0; padding: 0.6rem 0.8rem; border-radius: 10px; font-size: 0.9rem; }
+.message.error { background: #fdecea; color: var(--danger); }
+.message.ok    { background: #e8f6ef; color: var(--leaf); }
+.message.hidden { display: none; }
+
+/* --------------------------------------------------------------- calendar */
+
+.calendar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.9rem;
+}
+.calendar-head strong { font-size: 1.05rem; }
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.calendar .dow {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #8494ad;
+  padding-bottom: 4px;
+}
+.day {
+  position: relative;
+  min-height: 62px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fffdf9;
+  padding: 4px 6px;
+  text-align: left;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.day .num { font-weight: bold; }
+.day.blank { border: none; background: transparent; }
+.day.past { opacity: 0.4; cursor: not-allowed; }
+.day.today { border-color: var(--sunset); border-width: 2px; }
+.day.booked { background: #ffe3d6; }
+.day.booked.mine { background: #d9f0e6; }
+.day.selected { outline: 3px solid var(--sunset); outline-offset: -3px; }
+.day .who {
+  font-size: 0.68rem;
+  line-height: 1.15;
+  color: #5b6b85;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.legend { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.8rem; margin-top: 0.9rem; color: #5b6b85; }
+.legend span { display: flex; align-items: center; gap: 0.35rem; }
+.swatch { width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--line); display: inline-block; }
+.swatch.mine   { background: #d9f0e6; }
+.swatch.booked { background: #ffe3d6; }
+.swatch.free   { background: #fffdf9; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th, td { text-align: left; padding: 0.55rem 0.5rem; border-bottom: 1px solid var(--line); }
+th { color: #8494ad; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.empty { color: #8494ad; font-style: italic; padding: 0.8rem 0; }
+
+.login-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(160deg, var(--sky-top), var(--sky-bottom));
+}
+.login-card { width: 100%; max-width: 380px; }
+.login-card h1 { margin-top: 0; font-size: 1.35rem; }
+.login-card .hint { font-size: 0.82rem; color: #8494ad; }
+
+/* ------------------------------------------------------------ header nav */
+
+.app-header nav .greeting { margin-right: 0.4rem; opacity: 0.85; }
+.app-header nav a {
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+}
+.app-header nav a.active { background: rgba(255, 217, 160, 0.18); }
+.app-header nav .logout { border-color: #ffd9a0; color: #ffd9a0; }
+
+/* ------------------------------------------------------------- todo list */
+
+.filters { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.chip {
+  background: #fffdf9;
+  border: 1px solid var(--line);
+  color: #5b6b85;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.82rem;
+}
+.chip.active { background: var(--deep); color: #fff; border-color: var(--deep); }
+
+.task-list { list-style: none; margin: 0; padding: 0; }
+.task {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.task:last-child { border-bottom: none; }
+.task-main { flex: 1 1 320px; min-width: 0; }
+.task-title { font-weight: bold; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.task.done .task-title { text-decoration: line-through; opacity: 0.6; }
+.task-description { margin: 0.3rem 0 0; color: #5b6b85; font-size: 0.88rem; }
+.task-meta { margin: 0.35rem 0 0; color: #8494ad; font-size: 0.78rem; }
+.task-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.badge {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-weight: bold;
+}
+.badge.todo  { background: #eef1f6; color: #5b6b85; }
+.badge.doing { background: #ffe3d6; color: #b4511f; }
+.badge.done  { background: #d9f0e6; color: #1f6b4f; }
+
+/* ----------------------------------------------------------- destinations */
+
+.destination {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 0.9rem;
+  background: #fffdf9;
+}
+.destination-head {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.destination h3 { margin: 0; font-size: 1.05rem; }
+.destination-meta { margin: 0.25rem 0 0; color: #8494ad; font-size: 0.8rem; }
+.destination-description { margin: 0.7rem 0 0; color: #5b6b85; font-size: 0.9rem; }
+.destination-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.wishlist-panel {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--line);
+}
+.wish-list { list-style: none; margin: 0 0 0.9rem; padding: 0; }
+.wish {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.wish:last-child { border-bottom: none; }
+.wish.fulfilled .wish-product { text-decoration: line-through; opacity: 0.55; }
+.wish-product { display: block; font-weight: bold; font-size: 0.92rem; }
+.wish-meta { display: block; color: #8494ad; font-size: 0.78rem; }
+.wish-actions { display: flex; gap: 0.4rem; }
+
+.wish-form { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.wish-form input { flex: 1 1 180px; }
+.wish-form input.quantity { flex: 0 0 90px; }
+.wish-form button { flex: 0 0 auto; }

@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: sacred-camper-service
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sacred-camper-db
+          property: connectionString
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        value: ''
+      - key: PGSSLMODE
+        value: require
+      - key: PORT
+        value: 3000
+
+databases:
+  - name: sacred-camper-db
+    databaseName: sacred_camper_db
+    user: sacred_camper_user
+    region: oregon
